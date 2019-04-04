@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Bigschool.Models;
+using Bigschool.ViewModels;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,33 +11,34 @@ namespace Bigschool.Controllers
 {
     public class CoursesController : Controller
     {
-        private readonly ApplicationDbcontext_dbContext;
+        private readonly ApplicationDbContext _dbContext;
             public CoursesController()
         {
-            _dbContext = new ApplicationDbcontext();
+            _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
             {
-                Categories = _dbContext.Categories.Tolist()
+                Categories = _dbContext.Categories.ToList()
 
             };
             return View(viewModel);
         }
         [Authorize] 
         [HttpPost]
-        public ActionResult Create(CoursesViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CourseViewModel viewModel)
         {
             if(!ModelState.IsValid)
             {
-                viewModel.Categories = _dbContext.Categories.Tolist();
+                viewModel.Categories = _dbContext.Categories.ToList();
                 return View("Create", viewModel);
             }
             var course = new Course
             {
-                LecturerId = User.Indentiny.GetUserId(),
+                LecturerId = User.Identity.GetUserId(),
                 DateTime = viewModel.GetDateTime(),
                 CategoryId = viewModel.Category,
                 Place = viewModel.Place
