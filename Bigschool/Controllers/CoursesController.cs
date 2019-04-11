@@ -22,7 +22,7 @@ namespace Bigschool.Controllers
         {
             var viewModel = new CourseViewModel
             {
-                Categories = _dbContext.Categories.ToList()
+                Categories = _dbContext.Categories.ToList(),
                 Heading = "Add Course"
             };
             return View(viewModel);
@@ -84,9 +84,9 @@ namespace Bigschool.Controllers
             var viewModel = new CourseViewModel
             {
                 Categories = _dbContext.Categories.ToList(),
-                DateTime = courses.DateTime.ToString("dd/M/yyyy"),
+                Date = courses.DateTime.ToString("dd/M/yyyy"),
                 Time = courses.DateTime.ToString("HH:mm"),
-                Place = courses.Place
+                Place = courses.Place,
                 Heading = "Edit Course",
                 Id = courses.Id
             };
@@ -96,7 +96,7 @@ namespace Bigschool.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update(CoursesViewModel viewModel)
+        public ActionResult Update(CourseViewModel viewModel)
         {
             if(!ModelState.IsValid)
             {

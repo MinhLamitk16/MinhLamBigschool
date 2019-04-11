@@ -2,17 +2,6 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<div class="row">
-    <ul>
-        @foreach ( var course in Model)
-        {
-            <li>
-                @course.DateTime - @course.Lecturer.Name
-                <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>
-            </li>
-        }
-    </ul>
-</div>
 <ul class="course">
     @foreach (var course in Model.UpcommingCourses)
     {
@@ -30,7 +19,7 @@
                     @course.Lecturer.Name
                     @if(Model.ShowAction)
                     {
-                        <button class="btn btn-link btn-sm js-toggle-attendance">Going?</button>
+                        <button class="btn btn-link btn-sm js-toggle-follow" data-user-id ="@course.LecturerId">Follow</button>
                     }
                 </span>
                 <span class="category">
